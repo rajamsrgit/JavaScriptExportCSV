@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+
+    <a href="" id="csv-download">Download CSV</a>
+
+    <script>
+
+        let books = [
+            {
+                "title": "The Catcher in the Rye",
+                "author": "J.D. Salinger"
+            },
+            {
+                "title": "To Kill a Mockingbird",
+                "author": "Harper Lee"
+            },
+            {
+                "title": "The Great Gatsby",
+                "author": "F. Scott Fitzgerald"
+            },
+            {
+                "title": "Pride and Prejudice",
+                "author": "Jane Austen"
+            }
+        ]
+
+        // Read the header names from first book object
+        let headers = Object.keys(books[0]);
+
+        // Create header columns CSV
+        let csvContents = headers.join(',') + '\n';
+
+        // Read each book and joins values comma separator
+        books.forEach(book => {
+            csvContents += Object.values(book).join(',') + '\n'
+        });
+
+        const blob = new Blob([csvContents], {
+            type: 'text/csv;charset=utf-8,'
+        })
+
+        const objectUrl = URL.createObjectURL(blob)
+        
+        document.getElementById('csv-download').setAttribute('href', objectUrl);
+        document.getElementById('csv-download').setAttribute('download', 'books.csv')
+    </script>
+
+</body>
+
+</html>
